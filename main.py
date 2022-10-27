@@ -10,12 +10,12 @@ cors = CORS(app)
 
 # from Controladores.ControladorCandidato import ControladorCandidato
 from Controladores.ControladorPartido import ControladorPartido
-# from Controladores.ControladorMesa import ControladorMesa
+from Controladores.ControladorMesa import ControladorMesa
 # from Controladores.ControladorVoto import ControladorVoto
 
 # miControladorCandidatos = ControladorCandidato()
 miControladorPartidos = ControladorPartido()
-# miControladorMesas = ControladorMesa()
+miControladorMesas = ControladorMesa()
 # miControladorVotos = ControladorVoto()
 
 # ---------------------------------------------------------- #
@@ -47,14 +47,34 @@ def modificarPartido(id):
 def eliminarPartido(id):
     json = miControladorPartidos.delete(id)
     return jsonify(json)
+# -------------------------------------------------------#
 
-
-
-
-
-
-
-
+@app.route("/mesas",methods=['GET'])
+def getMesas():
+    json=miControladorMesas.index()
+    return jsonify(json)
+@app.route("/mesas/<string:id>",methods=['GET'])
+def getMesa(id):
+    json=miControladorMesas.show(id)
+    return jsonify(json)
+@app.route("/mesas",methods=['POST'])
+def crearMesa():
+    data = request.get_json()
+    json=miControladorMesas.create(data)
+    return jsonify(json)
+@app.route("/mesas/<string:id>",methods=['PUT'])
+def modificarMesa(id):
+    data = request.get_json()
+    json=miControladorMesas.update(id,data)
+    return jsonify(json)
+@app.route("/mesas/<string:id>",methods=['DELETE'])
+def eliminarMesa(id):
+    json=miControladorMesas.delete(id)
+    return jsonify(json)
+@app.route("/mesas/<string:id>/partido/<string:id_partido>",methods=['PUT'])
+def asignarPartidoMesa(id,id_partido):
+    json=miControladorMesas.asignarPartido(id,id_partido)
+    return jsonify(json)
 
 # ---------------------------------------------------------- #
 # URLS de Camilo
@@ -97,3 +117,4 @@ if __name__=='__main__':
     serve(app,host=dataConfig["url-backend"],port=dataConfig["port"])
 
 # ---------------------------------------------------------- #
+
