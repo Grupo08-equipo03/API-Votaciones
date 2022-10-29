@@ -8,12 +8,13 @@ from waitress import serve
 app = Flask(__name__)
 cors = CORS(app)
 
-# from Controladores.ControladorCandidato import ControladorCandidato
+from Controladores.ControladorCandidato import ControladorCandidato
+
 from Controladores.ControladorPartido import ControladorPartido
 from Controladores.ControladorMesa import ControladorMesa
 # from Controladores.ControladorVoto import ControladorVoto
 
-# miControladorCandidatos = ControladorCandidato()
+objCandidatos = ControladorCandidato()
 miControladorPartidos = ControladorPartido()
 miControladorMesas = ControladorMesa()
 # miControladorVotos = ControladorVoto()
@@ -76,7 +77,37 @@ def asignarPartidoMesa(id,id_partido):
     json=miControladorMesas.asignarPartido(id,id_partido)
     return jsonify(json)
 
-# ---------------------------------------------------------- #
+# --------------------------Candidato------------------------------- #
+
+@app.route("/candidato",methods=['GET'])
+def getCandidatos():
+    json=objCandidatos.index()
+    return jsonify(json)
+
+@app.route("/candidato/<string:id>",methods=['GET'])
+def getCandidato(id):
+    json=objCandidatos.show(id)
+    return jsonify(json)
+
+@app.route("/candidato",methods=['POST'])
+def crearCandidato():
+    get = request.get_json()
+    json=objCandidatos.create(get)
+    return jsonify(json)
+
+@app.route("/candidato/<string:id>",methods=['PUT'])
+def actualizarCandidato(id):
+    get = request.get_json()
+    json=objCandidatos.update(id,get)
+    return jsonify(json)
+
+@app.route("/candidato/<string:id>",methods=['DELETE'])
+def eliminarCandidatos(id):
+    json=objCandidatos.delete(id)
+    return jsonify(json)
+
+# --------------------------------------------------------- #
+
 # URLS de Camilo
 # @app.route("/votos", methods=['GET'])
 # def getVotos():
