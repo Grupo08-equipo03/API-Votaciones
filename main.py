@@ -12,12 +12,12 @@ from Controladores.ControladorCandidato import ControladorCandidato
 
 from Controladores.ControladorPartido import ControladorPartido
 from Controladores.ControladorMesa import ControladorMesa
-# from Controladores.ControladorVoto import ControladorVoto
+from Controladores.ControladorVoto import ControladorVoto
 
 objCandidatos = ControladorCandidato()
 miControladorPartidos = ControladorPartido()
 miControladorMesas = ControladorMesa()
-# miControladorVotos = ControladorVoto()
+miControladorVotos = ControladorVoto()
 
 # ---------------------------------------------------------- #
 @app.route("/",methods=['GET'])
@@ -26,6 +26,7 @@ def test():
     json["message"]="Server running ..."
     return jsonify(json)
 # ---------------------------------------------------------- #
+
 @app.route("/partidos",methods=['GET'])
 def getPartidos():
     json = miControladorPartidos.index()
@@ -48,6 +49,7 @@ def modificarPartido(id):
 def eliminarPartido(id):
     json = miControladorPartidos.delete(id)
     return jsonify(json)
+
 # -------------------------------------------------------#
 
 @app.route("/mesas",methods=['GET'])
@@ -108,33 +110,33 @@ def eliminarCandidatos(id):
 
 # --------------------------------------------------------- #
 
-# URLS de Camilo
-# @app.route("/votos", methods=['GET'])
-# def getVotos():
-#     json = miControladorVotos.index()
-#     return jsonify(json)
+@app.route("/votos", methods=['GET'])
+def getVotos():
+    json = miControladorVotos.index()
+    return jsonify(json)
 
-# @app.route("/votos/<string:id>", methods=['GET'])
-# def getVoto(id):
-#     json = miControladorVotos.show(id)
-#     return jsonify(json)
+@app.route("/votos/<string:id>", methods=['GET'])
+def getVoto(id):
+    json = miControladorVotos.show(id)
+    return jsonify(json)
 
-# @app.route("/votos/candidatos/<string:id_candidato>/mesas/<string:id_mesa>", methods=['POST'])
-# def crearVoto(id_candidato, id_mesa):
-#     data = request.get_json()
-#     json = miControladorVotos.create(data, id_candidato, id_mesa)
-#     return jsonify(json)
+@app.route("/votos/candidatos/<string:id_candidato>/mesas/<string:id_mesa>", methods=['POST'])
+def crearVoto(id_candidato, id_mesa):
+    data = request.get_json()
+    json = miControladorVotos.create(data, id_candidato, id_mesa)
+    return jsonify(json)
 
-# @app.route("/votos/<string:id_voto>/candidatos/<string:id_candidato>/mesas/<string:id_mesa>", methods=['PUT'])
-# def modificarVoto(id_voto, id_candidato, id_mesa):
-#     data = request.get_json()
-#     json = miControladorVotos.update(id_voto, data, id_candidato, id_mesa)
-#     return jsonify(json)
+@app.route("/votos/<string:id_voto>/candidatos/<string:id_candidato>/mesas/<string:id_mesa>", methods=['PUT'])
+def modificarVoto(id_voto, id_candidato, id_mesa):
+    data = request.get_json()
+    json = miControladorVotos.update(id_voto, data, id_candidato, id_mesa)
+    return jsonify(json)
 
-# @app.route("/votos/<string:id_voto>", methods=['DELETE'])
-# def eliminarInscripcion(id_voto):
-#     json=miControladorVotos.delete(id_voto)
-#     return jsonify(json)
+@app.route("/votos/<string:id_voto>", methods=['DELETE'])
+def eliminarInscripcion(id_voto):
+    json=miControladorVotos.delete(id_voto)
+    return jsonify(json)
+
 # ---------------------------------------------------------- #
 
 def loadFileConfig():
@@ -145,7 +147,7 @@ def loadFileConfig():
 if __name__=='__main__':
     dataConfig = loadFileConfig()
     print("Server running : "+"http://"+dataConfig["url-backend"]+":" + str(dataConfig["port"]))
-    serve(app,host=dataConfig["url-backend"],port=dataConfig["port"])
+    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
 
 # ---------------------------------------------------------- #
 

@@ -20,8 +20,8 @@ class ControladorVoto():
         nuevoVoto = Voto(infoVoto)
         elCandidato = Candidato(self.repositorioCandidato.findById(id_candidato))
         laMesa = Mesa(self.repositorioMesa.findById(id_mesa))
-        nuevoVoto.voto = elCandidato
-        nuevoVoto.materia = laMesa
+        nuevoVoto.candidato = elCandidato
+        nuevoVoto.mesa = laMesa
         return self.repositorioVoto.save(nuevoVoto)
 
     # Buscar voto por id
@@ -29,17 +29,18 @@ class ControladorVoto():
         elVoto = Voto(self.repositorioVoto.findById(id))
         return elVoto.__dict__
     
-    # Modificación de voto  (si se va a permitir) (candidato y mesa) 
-    def update(self, id, infoVoto, id_candidato, id_mesa):
-        elVoto = Voto(self.repositorioVoto.findById(id))
-        elVoto.candidato = infoVoto["candidato"]
-        elVoto.mesa = infoVoto["mesa"]
-        elCandidato = Candidato(self.repositorioVoto.findById(id_candidato))
-        laMesa = Mesa(self.repositorioMesa.findById(id_mesa))
-        elVoto.candidato = elCandidato
-        elVoto.materia = laMesa
-        return self.repositorioVoto.save(elVoto)
+    # Modificación de voto  (si se va a permitir) (candidato y mesa)
+    # def update(self, id, infoVoto, id_candidato, id_mesa):
+    #     elVoto = Voto(self.repositorioVoto.findById(id))
+    #     elVoto.fecha = infoVoto['fecha']
+    #     elVoto.candidato = infoVoto["candidato"]
+    #     elVoto.mesa = infoVoto["mesa"]
+    #     elCandidato = Candidato(self.repositorioVoto.findById(id_candidato))
+    #     laMesa = Mesa(self.repositorioMesa.findById(id_mesa))
+    #     elVoto.candidato = elCandidato
+    #     elVoto.mesa = laMesa
+    #     return self.repositorioVoto.save(elVoto)
     
-    # Eliminar voto ( si se va a permitir)
+    # Eliminar voto (si se va a permitir)
     def delete(self, id):
         return self.repositorioVoto.delete(id)
