@@ -9,15 +9,16 @@ app = Flask(__name__)
 cors = CORS(app)
 
 from Controladores.ControladorCandidato import ControladorCandidato
-
 from Controladores.ControladorPartido import ControladorPartido
 from Controladores.ControladorMesa import ControladorMesa
 from Controladores.ControladorVoto import ControladorVoto
+from Controladores.ControladorReportes import ControladorReportes
 
 objCandidatos = ControladorCandidato()
 miControladorPartidos = ControladorPartido()
 miControladorMesas = ControladorMesa()
 miControladorVotos = ControladorVoto()
+miControladorReportes = ControladorReportes()
 
 # ---------------------------------------------------------- #
 @app.route("/",methods=['GET'])
@@ -138,6 +139,13 @@ def eliminarInscripcion(id_voto):
     return jsonify(json)
 
 # ---------------------------------------------------------- #
+# Reportes 
+@app.route("/contar-votos", methods=['GET'])
+def contarVotos():
+    json = miControladorReportes.contarVotos()
+    return jsonify(json)
+    
+# ---------------------------------------------------------- #
 
 def loadFileConfig():
     with open('configuracion.json') as f:
@@ -146,7 +154,7 @@ def loadFileConfig():
 
 if __name__=='__main__':
     dataConfig = loadFileConfig()
-    print("Server running : "+"http://"+dataConfig["url-backend"]+":" + str(dataConfig["port"]))
+    print("Server running: "+"http://"+dataConfig["url-backend"]+":" + str(dataConfig["port"]))
     serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
 
 # ---------------------------------------------------------- #
