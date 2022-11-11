@@ -1,0 +1,7 @@
+{
+    "url-backend": "127.0.0.1",
+    "port": 9999,
+  
+    "data-db-connection": "mongodb+srv://camilo:camilo123@cluster0.bj0u0yh.mongodb.net/?retryWrites=true&w=majority",
+    "name-db": "db-votaciones"
+}

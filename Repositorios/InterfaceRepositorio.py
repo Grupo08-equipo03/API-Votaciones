@@ -150,3 +150,7 @@ class InterfaceRepositorio(Generic[T]):
     def ObjectToDBRef(self, item: T):
         nameCollection = item.__class__.__name__.lower()
         return DBRef(nameCollection, ObjectId(item._id))
+
+    def countDocuments(self):
+        laColeccion = self.baseDatos[self.coleccion]
+        return laColeccion.count_documents({})
